@@ -8,7 +8,7 @@ import com.alfrsms.challenge6.data.network.model.upcoming.Upcoming
 import com.alfrsms.challenge6.data.network.service.MovieApiService
 import javax.inject.Inject
 
-interface MovieDataSource {
+interface MovieRemoteDataSource {
     suspend fun getPopular(): Popular
     suspend fun getTopRated(): TopRated
     suspend fun getUpcoming(): Upcoming
@@ -16,8 +16,8 @@ interface MovieDataSource {
     suspend fun getDetail(id: Int): DetailMovie
 }
 
-class MovieDataSourceImpl @Inject constructor(private val apiService: MovieApiService):
-    MovieDataSource {
+class MovieRemoteDataSourceImpl @Inject constructor(private val apiService: MovieApiService):
+    MovieRemoteDataSource {
     override suspend fun getPopular(): Popular {
         return apiService.getPopular()
     }

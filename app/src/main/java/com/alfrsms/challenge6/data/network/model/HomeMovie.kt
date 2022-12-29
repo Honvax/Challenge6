@@ -2,10 +2,10 @@ package com.alfrsms.challenge6.data.network.model
 
 import com.google.gson.annotations.SerializedName
 
-class HomeMovie (
+class HomeMovie(
     val title: String? = null,
     @SerializedName("page")
     val page: Int? = null,
     @SerializedName("results")
-    val results: List<MovieItem>? = null
-        )
+    val results: List<HomeMovieItem>? = null
+)

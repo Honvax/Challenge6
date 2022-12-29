@@ -2,7 +2,7 @@ package com.alfrsms.challenge6.data.network.model
 
 import com.google.gson.annotations.SerializedName
 
-class MovieItem (
+data class HomeMovieItem(
     @SerializedName("adult")
     val adult: Boolean? = null,
     @SerializedName("backdrop_path")
@@ -31,4 +31,4 @@ class MovieItem (
     val voteAverage: Double? = null,
     @SerializedName("vote_count")
     val voteCount: Int? = null
-        )
+)

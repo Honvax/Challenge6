@@ -5,28 +5,28 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.alfrsms.challenge6.data.network.model.MovieItem
+import com.alfrsms.challenge6.data.network.model.HomeMovieItem
 import com.alfrsms.challenge6.databinding.ItemPosterBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomePosterViewHolder>() {
 
-    var itemClickListener: ((item: MovieItem) -> Unit)? = null
+    var itemClickListener: ((item: HomeMovieItem) -> Unit)? = null
 
-    private val diffCallback = object : DiffUtil.ItemCallback<MovieItem>() {
-        override fun areItemsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<HomeMovieItem>() {
+        override fun areItemsTheSame(oldItem: HomeMovieItem, newItem: HomeMovieItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean {
+        override fun areContentsTheSame(oldItem: HomeMovieItem, newItem: HomeMovieItem): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitList(movie: List<MovieItem>?) {
+    fun submitList(movie: List<HomeMovieItem>?) {
         differ.submitList(movie)
     }
 
@@ -43,7 +43,7 @@ class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomePosterViewH
 
     inner class HomePosterViewHolder(private val binding: ItemPosterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: MovieItem) {
+        fun bind(item: HomeMovieItem) {
             with(binding) {
                 Glide.with(itemView)
                     .load(IMAGE_URL + item.posterPath)

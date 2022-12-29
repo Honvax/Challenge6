@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
 
                 if (instance == null) {
                     val passphrase: ByteArray =
-                        SQLiteDatabase.getBytes("movie_app".toCharArray())
+                        SQLiteDatabase.getBytes("noteTaking-hashed".toCharArray())
                     val factory = SupportFactory(passphrase)
 
                     instance = Room.databaseBuilder(

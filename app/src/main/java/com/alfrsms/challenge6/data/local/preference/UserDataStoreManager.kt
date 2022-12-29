@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class UserDataStoreManager @Inject constructor(@ApplicationContext private val context: Context) {
 
-    suspend fun setUser(user: PreferenceUser) {
+    suspend fun setUser(user: UserPreferences) {
         context.userDataStore.edit { preferences ->
             preferences[ID_KEY] = user.id ?: 0
             preferences[USERNAME_KEY] = user.username
@@ -20,7 +20,7 @@ class UserDataStoreManager @Inject constructor(@ApplicationContext private val c
         }
     }
 
-    suspend fun updateUser(user: PreferenceUser) {
+    suspend fun updateUser(user: UserPreferences) {
         context.userDataStore.edit { preferences ->
             preferences[USERNAME_KEY] = user.username
             preferences[EMAIL_KEY] = user.email
@@ -42,9 +42,9 @@ class UserDataStoreManager @Inject constructor(@ApplicationContext private val c
         }
     }
 
-    fun getUser(): Flow<PreferenceUser> {
+    fun getUser(): Flow<UserPreferences> {
         return context.userDataStore.data.map { preferences ->
-            PreferenceUser(
+            UserPreferences(
                 preferences[ID_KEY] ?: 0,
                 preferences[USERNAME_KEY] ?: "",
                 preferences[EMAIL_KEY] ?: "",

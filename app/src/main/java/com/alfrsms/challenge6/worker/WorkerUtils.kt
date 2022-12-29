@@ -1,4 +1,5 @@
 @file:JvmName("WorkerUtils")
+
 package com.alfrsms.challenge6.worker
 
 import android.app.NotificationChannel
@@ -16,16 +17,27 @@ import androidx.annotation.WorkerThread
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.alfrsms.challenge6.R
+import com.alfrsms.challenge6.worker.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 
+/**
+ * Create a Notification that is shown as a heads-up notification if possible.
+ *
+ * For this codelab, this is used to show a notification so that you know when different steps
+ * of the background work chain are starting
+ *
+ * @param message Message shown on the notification
+ * @param context Context needed to create Toast
+ */
 
 private const val TAG = "WorkerUtils"
 fun makeStatusNotification(message: String, context: Context) {
 
+    // Make a channel if necessary
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -65,6 +77,13 @@ fun sleep() {
     }
 
 }
+
+/**
+ * Blurs the given Bitmap image
+ * @param bitmap Image to blur
+ * @param applicationContext Application context
+ * @return Blurred bitmap image
+ */
 @WorkerThread
 fun blurBitmap(bitmap: Bitmap, applicationContext: Context): Bitmap {
     lateinit var rsContext: RenderScript
@@ -91,6 +110,14 @@ fun blurBitmap(bitmap: Bitmap, applicationContext: Context): Bitmap {
         rsContext.finish()
     }
 }
+
+/**
+ * Writes bitmap to a temporary file and returns the Uri for the file
+ * @param applicationContext Application context
+ * @param bitmap Bitmap to write to temp file
+ * @return Uri for temp file with bitmap
+ * @throws FileNotFoundException Throws if bitmap file cannot be found
+ */
 @Throws(FileNotFoundException::class)
 fun writeBitmapToFile(applicationContext: Context, bitmap: Bitmap): Uri {
     val name = String.format("blur-filter-output-%s.png", UUID.randomUUID().toString())

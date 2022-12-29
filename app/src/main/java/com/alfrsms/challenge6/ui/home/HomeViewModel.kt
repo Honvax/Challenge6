@@ -1,7 +1,7 @@
 package com.alfrsms.challenge6.ui.home
 
 import androidx.lifecycle.*
-import com.alfrsms.challenge6.data.local.preference.PreferenceUser
+import com.alfrsms.challenge6.data.local.preference.UserPreferences
 import com.alfrsms.challenge6.data.network.model.HomeMovie
 import com.alfrsms.challenge6.data.repository.MovieRepository
 import com.alfrsms.challenge6.data.repository.UserRepository
@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(private val movieRepository: MovieReposi
         }
     }
 
-    fun getUser(): LiveData<PreferenceUser> {
+    fun getUser(): LiveData<UserPreferences> {
         return userRepository.getUser().asLiveData()
     }
 }

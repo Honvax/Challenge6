@@ -16,7 +16,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.work.WorkInfo
 import com.alfrsms.challenge6.R
-import com.alfrsms.challenge6.data.local.preference.PreferenceUser
+import com.alfrsms.challenge6.data.local.preference.UserPreferences
 import com.alfrsms.challenge6.databinding.FragmentProfileBinding
 import com.alfrsms.challenge6.ui.MainActivity
 import com.alfrsms.challenge6.worker.KEY_IMAGE_URI
@@ -82,6 +82,12 @@ class ProfileFragment : Fragment() {
 
     private fun workInfosObserver(): Observer<List<WorkInfo>> {
         return Observer { listOfWorkInfo ->
+
+            // Note that these next few lines grab a single WorkInfo if it exists
+            // This code could be in a Transformation in the ViewModel; they are included here
+            // so that the entire process of displaying a WorkInfo is in one location.
+
+            // If there are no matching work info, do nothing
             if (listOfWorkInfo.isNullOrEmpty()) {
                 return@Observer
             }
@@ -106,6 +112,10 @@ class ProfileFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * Shows and hides views for when the Activity is processing an image
+     */
     private fun showWorkInProgress() {
         with(binding) {
             pbLoading.visibility = View.VISIBLE
@@ -115,7 +125,9 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
+    /**
+     * Shows and hides views for when the Activity is done processing an image
+     */
     private fun showWorkFinished() {
         with(binding) {
             pbLoading.visibility = View.GONE
@@ -130,7 +142,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun bindDataToView(user: PreferenceUser?) {
+    private fun bindDataToView(user: UserPreferences?) {
         user?.let {
             binding.apply {
                 tvUsername.text = getString(R.string.profile_username, user.username)

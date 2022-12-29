@@ -24,7 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.alfrsms.challenge6.R
-import com.alfrsms.challenge6.data.local.preference.PreferenceUser
+import com.alfrsms.challenge6.data.local.preference.UserPreferences
 import com.alfrsms.challenge6.databinding.FragmentUpdateProfileBinding
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,8 +89,8 @@ class UpdateProfileFragment : Fragment() {
     }
 
 
-    private fun parseFormIntoData(): PreferenceUser {
-        return PreferenceUser(
+    private fun parseFormIntoData(): UserPreferences {
+        return UserPreferences(
             username = binding.etUsername.text.toString().trim(),
             email = binding.etUsername.text.toString().trim(),
             fullName = binding.etFullName.text.toString().trim(),
@@ -103,7 +103,7 @@ class UpdateProfileFragment : Fragment() {
         }
     }
 
-    private fun bindDataToForm(user: PreferenceUser?) {
+    private fun bindDataToForm(user: UserPreferences?) {
         Log.d("profile", user.toString())
         user?.let {
             binding.apply {

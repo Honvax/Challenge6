@@ -6,7 +6,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.lifecycle.*
 import androidx.work.*
-import com.alfrsms.challenge6.data.local.preference.PreferenceUser
+import com.alfrsms.challenge6.data.local.preference.UserPreferences
 import com.alfrsms.challenge6.data.repository.UserRepository
 import com.alfrsms.challenge6.worker.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val repository: UserRepository, @ApplicationContext application: Context): ViewModel() {
 
-    fun getUser(): LiveData<PreferenceUser> {
+    fun getUser(): LiveData<UserPreferences> {
         return repository.getUser().asLiveData()
     }
 
@@ -29,7 +29,7 @@ class ProfileViewModel @Inject constructor(private val repository: UserRepositor
         }
     }
 
-    fun updateUser(user: PreferenceUser) {
+    fun updateUser(user: UserPreferences) {
         viewModelScope.launch {
             repository.updateUser(user)
         }
@@ -62,6 +62,10 @@ class ProfileViewModel @Inject constructor(private val repository: UserRepositor
         return builder.build()
     }
 
+    /**
+     * Create the WorkRequest to apply the blur and save the resulting image
+     * @param blurLevel The amount to blur the image
+     */
     internal fun applyBlur(blurLevel: Int) {
         // Add WorkRequest to Cleanup temporary images
         var continuation = workManager
@@ -85,10 +89,12 @@ class ProfileViewModel @Inject constructor(private val repository: UserRepositor
             continuation = continuation.then(blurBuilder.build())
         }
 
+        // Create charging constraint
         val constraints = Constraints.Builder()
             .setRequiresCharging(true)
             .build()
 
+        // Add WorkRequest to save the image to the filesystem
         val save = OneTimeWorkRequestBuilder<SaveImageToFileWorker>()
             .setConstraints(constraints)
             .addTag(TAG_OUTPUT)
@@ -111,7 +117,7 @@ class ProfileViewModel @Inject constructor(private val repository: UserRepositor
         val bytes = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path: String = MediaStore.Images.Media.insertImage(
-            context.contentResolver,
+            context.getContentResolver(),
             image,
             "BlurredImage_" + Calendar.getInstance().time,
             null

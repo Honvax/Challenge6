@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.alfrsms.challenge6.data.network.model.search.SearchItem
 import com.alfrsms.challenge6.data.repository.MovieRepository
 import com.alfrsms.challenge6.wrapper.Resource
-
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

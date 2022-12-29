@@ -18,9 +18,15 @@ class BlurWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
 
         makeStatusNotification("Blurring image", appContext)
 
+        // This is an utility function added to emulate slower work.
         sleep()
 
         return try {
+            /*if (TextUtils.isEmpty(resourceUri)) {
+                Log.e(TAG, "Invalid input uri")
+                throw IllegalArgumentException("Invalid input uri")
+            }*/
+
             val resolver = appContext.contentResolver
 
             val picture = BitmapFactory.decodeStream(
@@ -28,6 +34,7 @@ class BlurWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
 
             val output = blurBitmap(picture, appContext)
 
+            // Write bitmap to a temp file
             val outputUri = writeBitmapToFile(appContext, output)
 
             val outputData = workDataOf(KEY_IMAGE_URI to outputUri.toString())

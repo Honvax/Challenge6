@@ -1,4 +1,4 @@
-package com.alfrsms.challange5.ui.detail
+package com.alfrsms.challenge6.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,27 +1,26 @@
 package com.alfrsms.challenge6.data.local.preference
 
 import kotlinx.coroutines.flow.Flow
-
 import javax.inject.Inject
 
 interface UserPreferenceDataSource {
-    suspend fun setUser(user: PreferenceUser)
-    suspend fun updateUser(user: PreferenceUser)
+    suspend fun setUser(user: UserPreferences)
+    suspend fun updateUser(user: UserPreferences)
     suspend fun setUserLogin(isLogin: Boolean)
     suspend fun setProfileImage(image: String)
 
-    fun getUser(): Flow<PreferenceUser>
+    fun getUser(): Flow<UserPreferences>
     fun getUserLogin(): Flow<Boolean>
 }
 
 class UserPreferenceDataSourceImpl @Inject constructor(
     private val userDataStore: UserDataStoreManager
 ): UserPreferenceDataSource {
-    override suspend fun setUser(user: PreferenceUser) {
+    override suspend fun setUser(user: UserPreferences) {
         userDataStore.setUser(user)
     }
 
-    override suspend fun updateUser(user: PreferenceUser) {
+    override suspend fun updateUser(user: UserPreferences) {
         userDataStore.updateUser(user)
     }
 
@@ -33,7 +32,7 @@ class UserPreferenceDataSourceImpl @Inject constructor(
         userDataStore.setProfileImage(image)
     }
 
-    override fun getUser(): Flow<PreferenceUser> {
+    override fun getUser(): Flow<UserPreferences> {
         return userDataStore.getUser()
     }
 

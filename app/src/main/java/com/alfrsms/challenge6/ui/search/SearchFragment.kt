@@ -64,10 +64,10 @@ class SearchFragment : Fragment() {
     private fun observeData() {
         viewModel.searchResult.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Loading -> {}
-                is Resource.Error -> {}
-                is Resource.Empty -> {}
-                is Resource.Success -> {
+                is Resource.Loading<*> -> {}
+                is Resource.Error<*> -> {}
+                is Resource.Empty<*> -> {}
+                is Resource.Success<*> -> {
                     adapter.submitList(it.payload)
                 }
             }

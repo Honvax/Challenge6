@@ -29,4 +29,5 @@
     <string name="profile_full_name">Nama lengkap: \n$1%s</string>
     <string name="profile_date_of_birth">Tanggal lahir: \n$1%s</string>
     <string name="profile_address">Alamat: \n$1%s</string>
+    <string name="movie">Film</string>
 </resources>

@@ -1,26 +1,26 @@
 package com.alfrsms.challenge6.data.repository
 
-import com.alfrsms.challenge6.data.network.model.MovieItem
+import com.alfrsms.challenge6.data.network.datasource.MovieRemoteDataSource
+import com.alfrsms.challenge6.data.network.model.HomeMovieItem
 import com.alfrsms.challenge6.data.network.model.detail.DetailMovie
 import com.alfrsms.challenge6.data.network.model.search.SearchItem
 import com.alfrsms.challenge6.wrapper.Resource
-import com.alfrsms.challenge6.data.network.datasource.MovieDataSource
 import javax.inject.Inject
 
 interface MovieRepository {
-    suspend fun getPopular(): Resource<List<MovieItem>>
-    suspend fun getTopRated(): Resource<List<MovieItem>>
-    suspend fun getUpcoming(): Resource<List<MovieItem>>
+    suspend fun getPopular(): Resource<List<HomeMovieItem>>
+    suspend fun getTopRated(): Resource<List<HomeMovieItem>>
+    suspend fun getUpcoming(): Resource<List<HomeMovieItem>>
     suspend fun searchMovie(query: String): Resource<List<SearchItem>>
     suspend fun getDetail(id: Int): Resource<DetailMovie>
 }
 
-class MovieRepositoryImpl @Inject constructor(private val dataSource: MovieDataSource):
+class MovieRepositoryImpl @Inject constructor(private val dataSource: MovieRemoteDataSource):
     MovieRepository {
-    override suspend fun getPopular(): Resource<List<MovieItem>> {
+    override suspend fun getPopular(): Resource<List<HomeMovieItem>> {
         return proceed {
             dataSource.getPopular().results?.map {
-                MovieItem(
+                HomeMovieItem(
                     adult = it.adult,
                     backdropPath = it.backdropPath,
                     genreIds = it.genreIds,
@@ -39,10 +39,10 @@ class MovieRepositoryImpl @Inject constructor(private val dataSource: MovieDataS
         }
     }
 
-    override suspend fun getTopRated(): Resource<List<MovieItem>> {
+    override suspend fun getTopRated(): Resource<List<HomeMovieItem>> {
         return proceed {
             dataSource.getTopRated().results?.map {
-                MovieItem(
+                HomeMovieItem(
                     adult = it.adult,
                     backdropPath = it.backdropPath,
                     genreIds = it.genreIds,
@@ -61,10 +61,10 @@ class MovieRepositoryImpl @Inject constructor(private val dataSource: MovieDataS
         }
     }
 
-    override suspend fun getUpcoming(): Resource<List<MovieItem>> {
+    override suspend fun getUpcoming(): Resource<List<HomeMovieItem>> {
         return proceed {
             dataSource.getUpcoming().results?.map {
-                MovieItem(
+                HomeMovieItem(
                     adult = it.adult,
                     backdropPath = it.backdropPath,
                     genreIds = it.genreIds,
@@ -86,7 +86,7 @@ class MovieRepositoryImpl @Inject constructor(private val dataSource: MovieDataS
     override suspend fun searchMovie(query: String): Resource<List<SearchItem>> {
         return try {
             val data = dataSource.searchMovie(query)
-            if (data.results.isNullOrEmpty()) Resource.Empty() else Resource.Success(data.results as List<SearchItem>)
+            if (data.results.isNullOrEmpty()) Resource.Empty() else Resource.Success(data.results)
         } catch (exception: Exception) {
             Resource.Error(exception)
         }

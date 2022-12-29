@@ -12,7 +12,6 @@ import com.alfrsms.challenge6.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 

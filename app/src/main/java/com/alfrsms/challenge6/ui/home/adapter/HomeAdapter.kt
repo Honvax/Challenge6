@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alfrsms.challenge6.data.network.model.HomeMovie
-import com.alfrsms.challenge6.data.network.model.MovieItem
+import com.alfrsms.challenge6.data.network.model.HomeMovieItem
 import com.alfrsms.challenge6.databinding.ItemTitleBinding
 
 
 class HomeAdapter: RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
-    var itemClickListener: ((item: MovieItem) -> Unit)? = null
+    var itemClickListener: ((item: HomeMovieItem) -> Unit)? = null
 
     private val diffCallback = object : DiffUtil.ItemCallback<HomeMovie>() {
         override fun areItemsTheSame(oldItem: HomeMovie, newItem: HomeMovie): Boolean {

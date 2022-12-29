@@ -1,6 +1,6 @@
 package com.alfrsms.challenge6.data.local.preference
 
-data class PreferenceUser(
+data class UserPreferences(
     var id: Int? = 0,
     val username: String,
     val email: String,
